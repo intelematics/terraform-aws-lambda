@@ -59,6 +59,17 @@ variable "policy" {
   default = null
 }
 
+variable "trusted_entities" {
+  description = "Lambda function additional trusted entities for assuming roles (trust relationship)"
+  type = list(string)
+  default = []
+}
+
+locals {
+  publish = var.lambda_at_edge ? true : var.publish
+  timeout = var.lambda_at_edge ? min(var.timeout, 5) : var.timeout
+}
+
 # Optional attributes to pass through to the resource.
 
 variable "description" {
