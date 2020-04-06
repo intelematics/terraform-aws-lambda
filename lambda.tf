@@ -48,6 +48,12 @@ resource "aws_lambda_function" "lambda" {
     }
   }
 }
+resource "aws_lambda_function_event_invoke_config" "lambda" {
+  count                          = var.s3_bucket_lambda_package != null ? 0 : 1
+  function_name                  = aws_lambda_function.lambda.function_name
+  maximum_event_age_in_seconds   = var.maximum_event_age_in_seconds
+  maximum_retry_attempts         = var.maximum_retry_attempts
+}
 
 # Note the module must manage the s3 bucket, rather than this be created in the caller then passed in
 # It's currently a constraint of Terraform when using the conditional (count hack)
@@ -119,4 +125,11 @@ resource "aws_lambda_function" "lambda_from_s3" {
       subnet_ids         = vpc_config.value.subnet_ids
     }
   }
+}
+
+resource "aws_lambda_function_event_invoke_config" "lambda_from_s3" {
+  count                          = var.s3_bucket_lambda_package != null ? 1 : 0
+  function_name                  = aws_lambda_function.lambda_from_s3.function_name
+  maximum_event_age_in_seconds   = var.maximum_event_age_in_seconds
+  maximum_retry_attempts         = var.maximum_retry_attempts
 }
