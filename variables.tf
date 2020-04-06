@@ -136,3 +136,12 @@ variable "vpc_config" {
   })
   default = null
 }
+
+variable "maximum_event_age_in_seconds" {
+  type = number
+  default = 60
+}
+variable "maximum_retry_attempts" {
+  type = number
+  default = 2
+}
