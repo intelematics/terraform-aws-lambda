@@ -5,6 +5,7 @@ locals {
   s3_lifecycle_delete_days = 30
 }
 
+
 # Required variables.
 variable "function_name" {
   type = string
@@ -45,6 +46,12 @@ variable "cloudwatch_logs" {
   default     = true
 }
 
+variable "cloudwatch_logs_retention_days" {
+  description = "Number of days to retain CloudWatch Logs"
+  type        = number
+  default     = 3653
+}
+
 variable "lambda_at_edge" {
   description = "Set this to true if using Lambda@Edge, to enable publishing, limit the timeout, and allow edgelambda.amazonaws.com to invoke the function"
   type        = bool
@@ -63,11 +70,6 @@ variable "trusted_entities" {
   description = "Lambda function additional trusted entities for assuming roles (trust relationship)"
   type = list(string)
   default = []
-}
-
-locals {
-  publish = var.lambda_at_edge ? true : var.publish
-  timeout = var.lambda_at_edge ? min(var.timeout, 5) : var.timeout
 }
 
 # Optional attributes to pass through to the resource.
