@@ -21,7 +21,6 @@ resource "null_resource" "archive" {
   provisioner "local-exec" {
     command     = lookup(data.external.archive.result, "build_command")
     working_dir = path.module
-    on_fail     = fail
   }
 }
 
