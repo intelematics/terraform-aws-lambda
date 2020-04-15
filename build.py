@@ -126,7 +126,7 @@ cmd = [
     ''' % (os.path.basename(filename), os.path.basename(filename))
 ]
 print(cmd)
-subprocess.run(cmd)
+subprocess.run(cmd, check=True)
 
 print('out dir %s' % os.path.abspath(hash.DIRNAME_BUILDS))
 print('Created {}'.format(filename))
