@@ -129,7 +129,11 @@ print(cmd)
 try:
     subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 except subprocess.CalledProcessError as e:
-    print(f'Error running docker command {e.cmd}. Message was: {e.output}')
+    print('Error running docker command')
+    print(e.cmd)
+    print('Output:')
+    print(e.output)
+    print('raising ...')
     raise(e)
 
 print('out dir %s' % os.path.abspath(hash.DIRNAME_BUILDS))
