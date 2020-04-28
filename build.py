@@ -126,7 +126,13 @@ cmd = [
     ''' % (os.path.basename(filename), os.path.basename(filename))
 ]
 print(cmd)
-subprocess.run(cmd, check=True)
+try:
+    subprocess.run(cmd, check=True)
+except subprocess.CalledProcessError as e:
+    print('Error running docker command. Message was:')
+    print(e.stderr)
+    print(e.stdout)
+    raise(e)
 
 print('out dir %s' % os.path.abspath(hash.DIRNAME_BUILDS))
 print('Created {}'.format(filename))
