@@ -30,7 +30,7 @@ resource "null_resource" "archive" {
 # deletes the Lambda function. If the file is rebuilt here, the build
 # output is unfortunately invisible.
 data "external" "built" {
-  program = ["python3", "${path.module}/built.py"]
+  program = ["python3", os.path.join(path.module, "built.py")]
 
   query = {
     build_command  = lookup(data.external.archive.result, "build_command")
