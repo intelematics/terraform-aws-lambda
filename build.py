@@ -127,7 +127,7 @@ cmd = [
 ]
 print(cmd)
 try:
-    subprocess.run(cmd, check=True)
+    subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 except subprocess.CalledProcessError as e:
     print(f'Error running docker command {e.cmd}. Message was: {e.output}')
     raise(e)
