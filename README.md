@@ -163,3 +163,18 @@ The following arguments from the [aws_lambda_function](https://www.terraform.io/
 | function\_qualified\_arn | The qualified ARN of the Lambda function |
 | role\_arn | The ARN of the IAM role created for the Lambda function |
 | role\_name | The name of the IAM role created for the Lambda function |
+
+## Gotchas
+
+### Docker on Windows + WSLv1
+WSLv2 due to be released can run Docker natively hence shouldn't suffer from many of the problems under v1.
+
+Can be tricky. Main problem is file access, since (with WSLv1) Docker Daemon running on Windows host, not within WSL. It should work if this module [code is under /c/Users/](https://github.com/docker/for-win/issues/2151), and the [volume is shared to Docker Daemon](https://token2shell.com/howto/docker/sharing-windows-folders-with-containers/)
+
+### Failure leaves partial configuration
+
+Sometimes lambda deployment (e.g. docker or python steps) will fail, leaving partially-configured resources e.g. the cloudwatch log group for the lambda gets created, but not put into the state file. If this happens, the terraform import can get confusing. If the top-level TF contains a module which deploys the lambda, which in turn uses this module, tf import will have to look like so:
+
+`terraform import module.github_read_all_team_update_lambda.module.github_read_all_team_update.aws_cloudwatch_log_group.lambda '/aws/lambda/azuread_roles_sync'`
+
+`terraform import module.ecr_scan_notify.module.ecr_scan_notify_lambda.aws_cloudwatch_log_group.lambda '/aws/lambda/ecr_scan_notify'``
