@@ -36,6 +36,7 @@ data "aws_iam_policy_document" "logs" {
 
     actions = [
       "logs:CreateLogStream",
+      "logs:CreateLogGroup",
       "logs:PutLogEvents",
     ]
 
