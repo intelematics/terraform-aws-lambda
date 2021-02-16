@@ -87,6 +87,7 @@ def dequote(value):
 filename = dequote(sys.argv[1])
 runtime = dequote(sys.argv[2])
 source_path = dequote(sys.argv[3])
+tag_prefix = dequote(sys.argv[4])
 
 absolute_filename = os.path.abspath(filename)
 
@@ -104,7 +105,7 @@ cmd = [
     '-t',
     '-v', '%s:/src' % source_dir,
     '-v', '%s:/out' % os.path.abspath(hash.DIRNAME_BUILDS),
-    'lambci/lambda:build-%s' % runtime,
+    'lambci/lambda:%sbuild-%s' % (tag_prefix, runtime),
     'bash', '-c',
     ''' cp -r /src /build &&
         cd /build &&
