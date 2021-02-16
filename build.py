@@ -105,7 +105,7 @@ cmd = [
     '-t',
     '-v', '%s:/src' % source_dir,
     '-v', '%s:/out' % os.path.abspath(hash.DIRNAME_BUILDS),
-    'lambci/lambda:%sbuild-%s' % (tag_prefix, runtime),
+    'lambci/lambda:%sbuild-python3.6' % tag_prefix,
     'bash', '-c',
     ''' cp -r /src /build &&
         cd /build &&
