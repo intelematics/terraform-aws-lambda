@@ -31,7 +31,7 @@ variable "s3_bucket_lambda_package" {
 variable "build_command" {
   description = "The command to run to create the Lambda package zip file"
   type        = string
-  default     = "python3 build.py '$filename' '$runtime' '$source'"
+  default     = "python3 build.py '$filename' '$runtime' '$source' '20200512-'"
 }
 
 variable "build_paths" {
